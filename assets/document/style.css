@@ -1,0 +1,857 @@
+ul{
+    list-style:none;
+    padding-left:0px;
+}
+.KBSC_FE_change_01_012{
+    position : absolute;
+    z-index : 1000;
+    width : 360px;
+    height : 760px;
+    left : 0px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    background-color : #FFFFFF;
+    border-radius : 0px;
+}
+.KBSC_FE_change_01_012_N1계좌선택{
+    position : absolute;
+    z-index : 999;
+    width : 196px;
+    height : 30px;
+    left : 82px;
+    top : 80px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.N1계좌선택_종합위탁01234578901{
+    position : absolute;
+    z-index : 998;
+    height : 20px;
+    left : 12px;
+    top : 5px;
+    color : #63636D;
+    font-size : 14px;
+    font-weight : 400;
+    text-align : LEFT;
+    line-height : 20px;
+    word-wrap : break-word;
+}
+.iconarrowdown{
+    position : absolute;
+    z-index : 997;
+    width : 24px;
+    height : 24px;
+    left : 166px;
+    top : 3px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+    background-image : url(./img/iconarrowdown.png);
+    background-size : contain;
+    background-position : center;
+}
+.N1계좌선택_BG{
+    position : absolute;
+    z-index : 996;
+    width : 196px;
+    height : 30px;
+    left : 0px;
+    top : 0px;
+    background-color : #F4F5F8;
+    border-radius : 18px;
+}
+.icon_statusBar{
+    position : absolute;
+    z-index : 995;
+    width : 360px;
+    height : 24px;
+    left : 0px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    background-color : #F8F9FC;
+    border-radius : 0px;
+    background-image : url(./img/icon_statusBar.png);
+    background-size : contain;
+    background-position : center;
+}
+.KBSC_FE_change_01_012_Top{
+    position : absolute;
+    z-index : 994;
+    width : 360px;
+    height : 56px;
+    left : 0px;
+    top : 24px;
+}
+.Top_nomal{
+    position : absolute;
+    z-index : 993;
+    width : 360px;
+    height : 56px;
+    left : 0px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    background-color : #FFFFFF;
+    border-radius : 0px;
+}
+.N28icon28ArrowLeft{
+    position : absolute;
+    z-index : 992;
+    width : 28px;
+    height : 28px;
+    left : 16px;
+    top : 14px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+    background-image : url(./img/N28icon28ArrowLeft.png);
+    background-size : contain;
+    background-position : center;
+}
+.nomal_title{
+    position : absolute;
+    z-index : 991;
+    width : 99px;
+    height : 28px;
+    left : 131px;
+    top : 14px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.title_Title{
+    position : absolute;
+    z-index : 990;
+    height : 28px;
+    left : 0px;
+    top : 0px;
+    color : #15131A;
+    font-size : 18px;
+    font-family : "Apple SD Gothic Neo";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 28px;
+    word-wrap : break-word;
+}
+.KBSC_FE_change_01_012_Contents{
+    position : absolute;
+    z-index : 989;
+    width : 360px;
+    height : 304px;
+    left : 0px;
+    top : 80px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Contents_N2title{
+    position : absolute;
+    z-index : 988;
+    width : 90px;
+    height : 28px;
+    left : 135px;
+    top : 78px;
+}
+.N2title_Group{
+    position : absolute;
+    z-index : 987;
+    width : 90px;
+    height : 28px;
+    left : 0px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Group_애플{
+    position : absolute;
+    z-index : 986;
+    height : 28px;
+    left : 55px;
+    top : 0px;
+    color : #15131A;
+    font-size : 20px;
+    font-family : "Apple SD Gothic Neo";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 28px;
+    word-wrap : break-word;
+}
+.Group_APPL{
+    position : absolute;
+    z-index : 985;
+    height : 28px;
+    left : 0px;
+    top : 0px;
+    color : #E58832;
+    font-size : 20px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 28px;
+    word-wrap : break-word;
+}
+.Contents_N234주주문가능{
+    position : absolute;
+    z-index : 984;
+    height : 20px;
+    left : 120px;
+    top : 191px;
+    font-size : 14px;
+    font-weight : 700;
+    text-align : RIGHT;
+    line-height : 20px;
+    word-wrap : break-word;
+}
+.Contents_N3스피너{
+    position : absolute;
+    z-index : 983;
+    width : 360px;
+    height : 40px;
+    left : 0px;
+    top : 38px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.iconminus{
+    position : absolute;
+    z-index : 982;
+    width : 36px;
+    height : 36px;
+    left : 40px;
+    top : 2px;
+    background-image : url(./img/iconminus.png);
+    background-size : contain;
+    background-position : center;
+}
+.N3스피너_최소단위1주{
+    position : absolute;
+    z-index : 981;
+    height : 36px;
+    left : 95px;
+    top : 2px;
+    color : #15131A;
+    font-size : 24px;
+    font-family : "Apple SD Gothic Neo";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.iconplus{
+    position : absolute;
+    z-index : 980;
+    width : 36px;
+    height : 36px;
+    left : 284px;
+    top : 2px;
+    background-image : url(./img/iconplus.png);
+    background-size : contain;
+    background-position : center;
+}
+.N3스피너_Rectangle{
+    position : absolute;
+    z-index : 979;
+    width : 360px;
+    height : 40px;
+    left : 0px;
+    top : 0px;
+    border : 0px solid #969696;
+    border-radius : 0px;
+}
+.Contents_온주전환은오전9시부터오후4{
+    position : absolute;
+    z-index : 978;
+    height : 20px;
+    left : 24px;
+    top : 284px;
+    color : #7D7E85;
+    font-size : 14px;
+    font-family : "Apple SD Gothic Neo";
+    font-weight : 400;
+    text-align : CENTER;
+    line-height : 20px;
+    word-wrap : break-word;
+}
+.KBSC_FE_change_01_012_Bottom{
+    position : absolute;
+    z-index : 977;
+    width : 360px;
+    height : 340px;
+    left : 0px;
+    top : 408px;
+}
+.Bottom_btn_brand{
+    position : absolute;
+    z-index : 976;
+    width : 328px;
+    height : 52px;
+    left : 16px;
+    top : 288px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    background-color : #FFC600;
+    border-radius : 6px;
+}
+.btn_brand_예{
+    position : absolute;
+    z-index : 975;
+    height : 28px;
+    left : 133px;
+    top : 12px;
+    color : #1A150A;
+    font-size : 18px;
+    font-family : "Apple SD Gothic Neo";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 28px;
+    word-wrap : break-word;
+}
+.Bottom_btn_주문수량{
+    position : absolute;
+    z-index : 974;
+    width : 312px;
+    height : 32px;
+    left : 24px;
+    top : 0px;
+}
+.btn_주문수량_fill1{
+    position : absolute;
+    z-index : 973;
+    width : 49px;
+    height : 32px;
+    left : 263px;
+    top : 0px;
+    padding-left : 10px;
+    padding-right : 10px;
+    padding-top : 6px;
+    padding-bottom : 6px;
+    background-color : #E8EAEE;
+    border-radius : 6px;
+}
+.fill1_변경하기{
+    position : absolute;
+    z-index : 972;
+    height : 20px;
+    left : 12px;
+    top : 6px;
+    color : #15131A;
+    font-size : 14px;
+    font-family : "Apple SD Gothic Neo";
+    font-weight : 400;
+    text-align : CENTER;
+    line-height : 20px;
+    word-wrap : break-word;
+}
+.btn_주문수량_fill2{
+    position : absolute;
+    z-index : 971;
+    width : 59px;
+    height : 32px;
+    left : 198px;
+    top : 0px;
+    padding-left : 10px;
+    padding-right : 10px;
+    padding-top : 6px;
+    padding-bottom : 6px;
+    background-color : #E8EAEE;
+    border-radius : 6px;
+}
+.fill2_변경하기{
+    position : absolute;
+    z-index : 970;
+    height : 20px;
+    left : 11px;
+    top : 6px;
+    color : #15131A;
+    font-size : 14px;
+    font-weight : 400;
+    text-align : CENTER;
+    line-height : 20px;
+    word-wrap : break-word;
+}
+.btn_주문수량_fill3{
+    position : absolute;
+    z-index : 969;
+    width : 59px;
+    height : 32px;
+    left : 133px;
+    top : 0px;
+    padding-left : 10px;
+    padding-right : 10px;
+    padding-top : 6px;
+    padding-bottom : 6px;
+    background-color : #E8EAEE;
+    border-radius : 6px;
+}
+.fill3_변경하기{
+    position : absolute;
+    z-index : 968;
+    height : 20px;
+    left : 12px;
+    top : 6px;
+    color : #15131A;
+    font-size : 14px;
+    font-weight : 400;
+    text-align : CENTER;
+    line-height : 20px;
+    word-wrap : break-word;
+}
+.btn_주문수량_fill4{
+    position : absolute;
+    z-index : 967;
+    width : 59px;
+    height : 32px;
+    left : 68px;
+    top : 0px;
+    padding-left : 10px;
+    padding-right : 10px;
+    padding-top : 6px;
+    padding-bottom : 6px;
+    background-color : #E8EAEE;
+    border-radius : 6px;
+}
+.fill4_변경하기{
+    position : absolute;
+    z-index : 966;
+    height : 20px;
+    left : 15px;
+    top : 6px;
+    color : #15131A;
+    font-size : 14px;
+    font-weight : 400;
+    text-align : CENTER;
+    line-height : 20px;
+    word-wrap : break-word;
+}
+.btn_주문수량_fill5{
+    position : absolute;
+    z-index : 965;
+    width : 62px;
+    height : 32px;
+    left : 0px;
+    top : 0px;
+    padding-left : 10px;
+    padding-right : 10px;
+    padding-top : 6px;
+    padding-bottom : 6px;
+    background-color : #E8EAEE;
+    border-radius : 6px;
+}
+.fill5_변경하기{
+    position : absolute;
+    z-index : 964;
+    height : 20px;
+    left : 18px;
+    top : 6px;
+    color : #15131A;
+    font-size : 14px;
+    font-weight : 400;
+    text-align : CENTER;
+    line-height : 20px;
+    word-wrap : break-word;
+}
+.Bottom_keypad{
+    position : absolute;
+    z-index : 963;
+    width : 360px;
+    height : 224px;
+    left : 0px;
+    top : 52px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.keypad_N1열{
+    position : absolute;
+    z-index : 962;
+    width : 360px;
+    height : 56px;
+    left : 0px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.N1열_Frame2091{
+    position : absolute;
+    z-index : 961;
+    width : 120px;
+    height : 56px;
+    left : 240px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Frame2091_N3{
+    position : absolute;
+    z-index : 960;
+    height : 36px;
+    left : 52px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.N1열_Frame2090{
+    position : absolute;
+    z-index : 959;
+    width : 120px;
+    height : 56px;
+    left : 120px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Frame2090_N2{
+    position : absolute;
+    z-index : 958;
+    height : 36px;
+    left : 53px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.N1열_Frame2089{
+    position : absolute;
+    z-index : 957;
+    width : 120px;
+    height : 56px;
+    left : 0px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Frame2089_N1{
+    position : absolute;
+    z-index : 956;
+    height : 36px;
+    left : 54px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.keypad_N2열{
+    position : absolute;
+    z-index : 955;
+    width : 360px;
+    height : 56px;
+    left : 0px;
+    top : 56px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.N2열_Frame2097{
+    position : absolute;
+    z-index : 954;
+    width : 120px;
+    height : 56px;
+    left : 240px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Frame2097_N6{
+    position : absolute;
+    z-index : 953;
+    height : 36px;
+    left : 52px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.N2열_Frame2096{
+    position : absolute;
+    z-index : 952;
+    width : 120px;
+    height : 56px;
+    left : 120px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Frame2096_N5{
+    position : absolute;
+    z-index : 951;
+    height : 36px;
+    left : 53px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.N2열_Frame2095{
+    position : absolute;
+    z-index : 950;
+    width : 120px;
+    height : 56px;
+    left : 0px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Frame2095_N1{
+    position : absolute;
+    z-index : 949;
+    height : 36px;
+    left : 52px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.keypad_N3열{
+    position : absolute;
+    z-index : 948;
+    width : 360px;
+    height : 56px;
+    left : 0px;
+    top : 112px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.N3열_Frame2100{
+    position : absolute;
+    z-index : 947;
+    width : 120px;
+    height : 56px;
+    left : 240px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Frame2100_N9{
+    position : absolute;
+    z-index : 946;
+    height : 36px;
+    left : 52px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.N3열_Frame2099{
+    position : absolute;
+    z-index : 945;
+    width : 120px;
+    height : 56px;
+    left : 120px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Frame2099_N8{
+    position : absolute;
+    z-index : 944;
+    height : 36px;
+    left : 52px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.N3열_Frame2098{
+    position : absolute;
+    z-index : 943;
+    width : 120px;
+    height : 56px;
+    left : 0px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.Frame2098_N1{
+    position : absolute;
+    z-index : 942;
+    height : 36px;
+    left : 53px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.keypad_N4열{
+    position : absolute;
+    z-index : 941;
+    width : 360px;
+    height : 56px;
+    left : 0px;
+    top : 168px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.N4열_right{
+    position : absolute;
+    z-index : 940;
+    width : 120px;
+    height : 56px;
+    left : 240px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.icon_del{
+    position : absolute;
+    z-index : 939;
+    width : 28px;
+    height : 28px;
+    left : 44px;
+    top : 14px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+    background-image : url(./img/icon_del.png);
+    background-size : contain;
+    background-position : center;
+}
+.N4열_center{
+    position : absolute;
+    z-index : 938;
+    width : 120px;
+    height : 56px;
+    left : 120px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+.center_N0{
+    position : absolute;
+    z-index : 937;
+    height : 36px;
+    left : 53px;
+    top : 10px;
+    color : #50505B;
+    font-size : 24px;
+    font-family : "SF Pro Display";
+    font-weight : 700;
+    text-align : CENTER;
+    line-height : 36px;
+    word-wrap : break-word;
+}
+.N4열_left{
+    position : absolute;
+    z-index : 936;
+    width : 120px;
+    height : 56px;
+    left : 0px;
+    top : 0px;
+    padding-left : 0px;
+    padding-right : 0px;
+    padding-top : 0px;
+    padding-bottom : 0px;
+    border-radius : 0px;
+}
+
