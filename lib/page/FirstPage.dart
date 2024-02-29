@@ -1,8 +1,8 @@
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../common/jsCommon.dart';
 import 'TestPage.dart';
 
 class FirstPage extends StatelessWidget {
@@ -12,7 +12,6 @@ class FirstPage extends StatelessWidget {
 
     String htmlPath = 'assets/document/test.html';
     String htmlString = await rootBundle.loadString(htmlPath);
-
     return htmlString;
   }
 
@@ -22,76 +21,31 @@ class FirstPage extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          SizedBox(height: 300),
+          const SizedBox(height: 300),
           Center(
             child: ElevatedButton(
                 onPressed: () async{
 
+                  //html 문서를 String으로 저장
                   var htmlString = await getHtmlString();
-                  Get.to(() => TestPage(htmlString: htmlString));
+                  //공통부분이 선언된 js런타임 객체 저장
+                  var js = await initJS();
+                  Get.to(() => TestPage(tag:"test", htmlString: htmlString,jsRuntime: js));
                 },
-                style: ButtonStyle(padding: MaterialStatePropertyAll(EdgeInsets.all(30))),
-                child: Text("화면이동")
+                style: const ButtonStyle(padding: MaterialStatePropertyAll(EdgeInsets.all(30))),
+                child: const Text("화면이동")
             ),
-          )
+          ),
+
+          const SizedBox(height: 100),
+
+          ElevatedButton(
+            onPressed: (){
+              // Get.to(() => tPage1());
+            },
+            child: const Text("테스트를 해보자"))
         ],
       ),
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
-//
-// class FirstPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: WebView(
-//         initialUrl: Uri.encodeFull(
-//             '''
-//             <html>
-//             <body>
-//                 <button id="myButton" style="padding: 30px;">화면이동</button>
-//                 <script>
-//                     document.getElementById('myButton').onclick = window.open('assets/document/test3.html')
-//
-//                 </script>
-//             </body>
-//             </html>
-//             '''),
-//         javascriptMode: JavascriptMode.unrestricted,
-//       ),
-//     );
-//   }
-// }
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-//
-// class FirstPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: InAppWebView(
-//         initialData: InAppWebViewInitialData(
-//         data: '''
-//             <html>
-//             <body>
-//                 <button id="myButton" style="padding: 30px;">YouTube로 이동</button>
-//                 <script>
-//                     document.getElementById('myButton').onclick = function() {
-//                         window.location.href = 'https://www.youtube.com';
-//                     }
-//                 </script>
-//             </body>
-//             </html>
-//             '''),
-//       ),
-//     );
-//   }
-// }
-
-
-
-
