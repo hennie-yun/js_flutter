@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import 'package:horizontal_data_table/horizontal_data_table.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:html/parser.dart' as htmlparser;
 import 'package:html/dom.dart' as dom;
 import 'package:webviewx/webviewx.dart';
@@ -45,7 +44,7 @@ var customRenderMap = {
   inputMatcher() : inputMatcherWidget,
   iframeMatcher() : iframeMatcherWidget,
   formMatcher() : formMatcherWidget,
-  svgMatcher() : svgMatcherWidget
+  // svgMatcher() : svgMatcherWidget
 };
 
 //**********선언**********
@@ -978,45 +977,45 @@ var iframeMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
 });
 
 
-var svgMatcherWidget = CustomRender.widget(widget: (context, buildChildren)  {
-  var divElement = context.tree.element;
-  var rawSvg = divElement?.querySelector('select')?.innerHtml ?? '';
-  final PictureInfo pictureInfo = svg.fromSvgString(rawSvg, '');
-
-  // You can draw the picture to a canvas:
-  final PictureRecorder recorder = PictureRecorder();
-  final Canvas canvas = Canvas(recorder);
-  canvas.drawPicture(pictureInfo.picture);
-
-  // Or convert the picture to an image:
-  final ui.Image image = pictureInfo.picture.toImage(pictureInfo.width.toInt(), pictureInfo.height.toInt());
-
-  pictureInfo.picture.dispose();
-
-  return Container(
-    // 여기에 그려진 이미지를 사용하거나, 그림을 그린 캔버스를 사용할 수 있습니다.
-    child: CustomPaint(
-      painter: CustomPainter(
-        painter: _SvgPainter(pictureInfo.picture),
-      ),
-    ),
-  );
-});
-
-//...
-
-class _SvgPainter extends CustomPainter {
-  final Picture picture;
-
-  _SvgPainter(this.picture);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawPicture(picture);
-  }
-
-  @override
-  bool shouldRepaint(_SvgPainter oldDelegate) {
-    return oldDelegate.picture != picture;
-  }
-}
+// var svgMatcherWidget = CustomRender.widget(widget: (context, buildChildren)  {
+//   var divElement = context.tree.element;
+//   var rawSvg = divElement?.querySelector('select')?.innerHtml ?? '';
+//   final PictureInfo pictureInfo = svg.fromSvgString(rawSvg, '');
+//
+//   // You can draw the picture to a canvas:
+//   final PictureRecorder recorder = PictureRecorder();
+//   final Canvas canvas = Canvas(recorder);
+//   canvas.drawPicture(pictureInfo.picture);
+//
+//   // Or convert the picture to an image:
+//   final ui.Image image = pictureInfo.picture.toImage(pictureInfo.width.toInt(), pictureInfo.height.toInt());
+//
+//   pictureInfo.picture.dispose();
+//
+//   return Container(
+//     // 여기에 그려진 이미지를 사용하거나, 그림을 그린 캔버스를 사용할 수 있습니다.
+//     child: CustomPaint(
+//       painter: CustomPainter(
+//         painter: _SvgPainter(pictureInfo.picture),
+//       ),
+//     ),
+//   );
+// });
+//
+// //...
+//
+// class _SvgPainter extends CustomPainter {
+//   final Picture picture;
+//
+//   _SvgPainter(this.picture);
+//
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     canvas.drawPicture(picture);
+//   }
+//
+//   @override
+//   bool shouldRepaint(_SvgPainter oldDelegate) {
+//     return oldDelegate.picture != picture;
+//   }
+// }
