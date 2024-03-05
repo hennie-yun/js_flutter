@@ -1,8 +1,7 @@
+import 'package:flutter_multi_platform/base/BasePage.dart';
 
 
 //test2.html을 출력하는 페이지
-import '../base/BasePage.dart';
-
 class TestPage2 extends BasePage<TestPage2>{
 
   TestPage2({super.key, required super.tag, required super.htmlString, required super.jsRuntime}){

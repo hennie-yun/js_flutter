@@ -52,37 +52,28 @@ abstract class BasePage<T> extends StatelessWidget {
       stylesheet.topLevels.forEach((cssNode) {
         if (cssNode is css_visitor.RuleSet) {
           cssNode.selectorGroup?.selectors.forEach((selector) {
-            String tagName = selector
-                .simpleSelectorSequences.first.simpleSelector
-                .toString();
+            String tagName = selector.simpleSelectorSequences.first.simpleSelector.toString();
             styles[tagName] = Style(); //
           });
         }
       });
       styles.forEach((key, value) {
-        print('Tag: $key, Color: ${value.height}');
+        print('Tag: $key, Color: ${value.color}');
       });
+
     } else {
       print('스타일태그 없음');
     }
 
+
     this.html = Html.fromDom(
       document: document,
-      customRenders: {
-        btnMatcher(): btnMatcherWidget,
-        tabMatcher(): tabMatcherWidget,
-        tableMatcher(): tableMatcherWidget,
-        gridMatcher(): gridMatcherWidget,
-        gridCheckBoxMatcher(): gridCheckBoxMatcherWidget,
-        comboBoxMatcher(): comboBoxMatcherWidget,
-        inputMatcher(): inputMatcherWidget,
-        iframeMatcher(): iframeMatcherWidget,
-        formMatcher(): formMatcherWidget
-      },
+      customRenders: customRenderMap,
       tagsList: Html.tags..addAll(customTagList),
       // style: styles,
     );
   }
+
 
   void _init() {
     _initHtml(htmlString);
@@ -90,24 +81,20 @@ abstract class BasePage<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return PopScope(
-    //   canPop: true,
-    //   onPopInvoked: (bool isBack) {
-    //     if (isBack) {
-    //       jsRuntimeList.removeLast();
-    //       return;
-    //     } else {
-    //       return;
-    //     }
-    //   },
-    //   child:
-       return Scaffold(
-
-          body:
-          ListView(padding: EdgeInsets.zero, children: [
-        html,
-      ])
-    // ),
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (bool isBack) {
+        //화면마다 JS런타임객체가 생성됨
+        //화면이 닫힐 때 JS런타임 객체도 삭제되도록 함
+        if (isBack) {jsRuntimeList.removeLast();}
+      },
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          body: ListView(
+            children: [
+               html
+            ],
+          ),),
     );
   }
 }

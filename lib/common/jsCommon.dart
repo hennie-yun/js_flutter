@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_js/flutter_js.dart';
+import 'package:flutter_multi_platform/common/pageMap.dart';
 import 'package:get/get.dart';
-import 'package:js_flutter/common/pageMap.dart';
 
 
 //페이지별 런타임 객체를 관리하기 위한 변수
@@ -26,23 +26,25 @@ Future<JavascriptRuntime> initJS() async{
   /////////채널 등록/////////
   //화면이동
   jsRuntime.onMessage("moveScreen", (args) async {
+
     print("move to ${args["screenId"]}");
+    
     if(args["screenId"] != null){
 
       String htmlPath = 'assets/document/${args["screenId"]}.html';
       String htmlString = await rootBundle.loadString(htmlPath);
-
+      print(args["objData"]);
       //공통부분이 선언된 js런타임 객체 저장
       var js = await initJS();
       var page = getPage({"screenId":args["screenId"],"htmlString": htmlString, "jsRuntime": js});
       //화면 이동
       Get.to(() => page);
     }
-    
     else{
       print("moveScreen(flutter): 존재하지 않는 스크린ID입니다");
     }
   });
+
 
   //화면 뒤로가기
   jsRuntime.onMessage("preHistory", (args) async {

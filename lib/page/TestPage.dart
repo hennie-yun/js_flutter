@@ -14,6 +14,7 @@ class TestPage extends BasePage<TestPage> {
     var btn_1 = new Button();
     var btn_2 = new Button();
     var btn_3 = new Button();
+    var btn_4 = new Button();
     //**********************//
     
     btn_1.OnClick=function(){
@@ -26,6 +27,10 @@ class TestPage extends BasePage<TestPage> {
     
     btn_3.OnClick=function(){
         menuManage.moveScreen("control2", {"arg1":"1"});
+    };
+
+    btn_4.OnClick=function(){
+        menuManage.moveScreen("cssTest", {"arg1":"1"});
     };
     ''');
   }

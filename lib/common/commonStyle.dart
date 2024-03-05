@@ -40,7 +40,7 @@ BoxConstraints boxConstraints(String style) {
     } else if (key == 'min-height') {
       minHeight =
           double.parse(keyValue[1].replaceAll(RegExp(r'[^0-9]'), '').trim());
-    } else if (key == 'max-height') {
+    } else if (key == 'max-width') {
       maxWidth =
           double.parse(keyValue[1].replaceAll(RegExp(r'[^0-9]'), '').trim());
     } else if (key == 'min-width') {
@@ -50,8 +50,10 @@ BoxConstraints boxConstraints(String style) {
 
   }
 
-  return BoxConstraints(
 
+
+
+  return BoxConstraints(
       maxHeight: maxHeight ?? double.infinity,
       minHeight: minHeight ?? 0.0,
       maxWidth: maxWidth ?? double.infinity,

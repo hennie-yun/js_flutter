@@ -1,16 +1,20 @@
+import 'dart:ui';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html_v3/custom_render.dart';
+import 'package:flutter_multi_platform/common/commonStyle.dart';
+import 'package:flutter_multi_platform/util/Utils.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:horizontal_data_table/horizontal_data_table.dart';
 
+import 'package:horizontal_data_table/horizontal_data_table.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:html/parser.dart' as htmlparser;
 import 'package:html/dom.dart' as dom;
 import 'package:webviewx/webviewx.dart';
 
-import '../util/Utils.dart';
-import 'commonStyle.dart';
 import 'constant.dart';
 import 'jsCommon.dart';
 
@@ -26,8 +30,23 @@ var customTagList = [
   "input",
   "textarea",
   "iframe",
-  "style"
+  "style",
+  "svg"
 ];
+
+var customRenderMap = {
+
+  btnMatcher(): btnMatcherWidget,
+  tabMatcher(): tabMatcherWidget,
+  tableMatcher(): tableMatcherWidget,
+  gridMatcher(): gridMatcherWidget,
+  gridCheckBoxMatcher():gridCheckBoxMatcherWidget,
+  comboBoxMatcher(): comboBoxMatcherWidget,
+  inputMatcher() : inputMatcherWidget,
+  iframeMatcher() : iframeMatcherWidget,
+  formMatcher() : formMatcherWidget,
+  svgMatcher() : svgMatcherWidget
+};
 
 //**********선언**********
 //변경하고 싶은 태그의 조건 작성
@@ -78,11 +97,11 @@ CustomRenderMatcher inputMatcher() =>
 CustomRenderMatcher iframeMatcher() =>
     (context) => (context.tree.element?.localName == 'iframe');
 
-// CustomRenderMatcher formMatcher() =>
-//     (context) => (context.tree.element?.id == 'form');
+CustomRenderMatcher svgMatcher() =>
+        (context) => (context.tree.element?.localName == 'svg');
 
 CustomRenderMatcher formMatcher() =>
-        (context) => (context.tree.element?.attributes['ctrltype'] == 'CT_FORM');
+    (context) => (context.tree.element?.attributes['ctrltype'] == 'CT_FORM');
 
 //**********위젯정의**********
 
@@ -115,20 +134,16 @@ var formMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
   dom.Document document = htmlparser.parse(context.tree.element?.innerHtml);
 
   return Container(
-      margin: EdgeInsets.all(0),
-      padding: EdgeInsets.all(0),
-      height: heightValue,
-      width: widthValue,
-      decoration: BoxDecoration(
-          border: Border.all()),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-
-          children: [
-          Utils().getWidgetFromDocument(document)
-        ]),
-      );
+    margin: EdgeInsets.all(0),
+    padding: EdgeInsets.all(0),
+    height: heightValue,
+    width: widthValue,
+    constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context.buildContext).size.height
+    ),
+    decoration: BoxDecoration(border: Border.all()),
+    child : Utils().getWidgetFromDocument(document)
+  );
 });
 
 //tab태그
@@ -197,35 +212,134 @@ var tabMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
   }
 
   return Container(
-    margin: EdgeInsets.zero,
-    padding: EdgeInsets.zero,
-
     height: heightValue,
     child: DefaultTabController(
-        initialIndex: initialIndex,
-        length: tabLength,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              color: defaultTabUnSelectedColor,
-              child: TabBar(
-                padding: EdgeInsets.zero,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicator: const BoxDecoration(color: defaultTabSelectedColor),
-                labelColor: Colors.white,
-                labelPadding: EdgeInsets.zero,
-                unselectedLabelColor: Colors.black,
-                tabs: tabWidgets,
+      initialIndex: initialIndex,
+      length: tabLength,
+      child: Builder(
+        builder: (BuildContext context) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                color: defaultTabUnSelectedColor,
+                child: TabBar(
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicator:
+                      const BoxDecoration(color: defaultTabSelectedColor),
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.black,
+                  tabs: tabWidgets,
+                ),
               ),
-            ),
-            Expanded(
-                child: Container(
-                    color: defaultTabViewBackgroundColor,
-                    child: TabBarView(children: tabViewWidget)))
-          ],
-        )),
+              Expanded(
+                  child: Container(
+                color: defaultTabViewBackgroundColor,
+                child: GestureDetector(
+                  onTap: () {
+                    var currentIndex = DefaultTabController.of(context)!.index;
+                    var nextTabIndex = currentIndex + 1;
+                    if (nextTabIndex >= tabLength) {
+                      nextTabIndex = 0;
+                    }
+                    DefaultTabController.of(context)!.animateTo(nextTabIndex);
+                  },
+                  onDoubleTap: () {
+                    var currentIndex = DefaultTabController.of(context)!.index;
+                    var prevTabIndex = currentIndex - 1;
+                    if (prevTabIndex < 0) {
+                      prevTabIndex = tabLength - 1;
+                    }
+                    DefaultTabController.of(context)!.animateTo(prevTabIndex);
+                  },
+                  child: TabBarView(children: tabViewWidget),
+                ),
+              )),
+            ],
+          );
+        },
+      ),
+    ),
   );
+
+// tab의 개수가 N개이상 일때 로직
+  // var tabBar = TabBar(
+  //   indicatorSize: TabBarIndicatorSize.tab,
+  //   indicator: const BoxDecoration(color: defaultTabSelectedColor),
+  //   labelColor: Colors.white,
+  //   unselectedLabelColor: Colors.black,
+  //   tabs: tabWidgets,
+  // );
+  //
+  // if (tabWidgets.length >= 6) {
+  //   tabBar = TabBar(
+  //     indicatorSize: TabBarIndicatorSize.tab,
+  //     indicator: const BoxDecoration(color: defaultTabSelectedColor),
+  //     labelColor: Colors.white,
+  //     unselectedLabelColor: Colors.black,
+  //     isScrollable: true,
+  //     tabAlignment: TabAlignment.start,
+  //     tabs: tabWidgets,
+  //   );
+  // }
+
+  // GestureDetector Swipe 구현 -> 근데 조금 버벅임을 포함한,,,
+  // return Container(
+  //   height: heightValue,
+  //   child: DefaultTabController(
+  //     initialIndex: initialIndex,
+  //     length: tabLength,
+  //     child: Builder(
+  //       builder: (BuildContext context) {
+  //         int currentIndex = DefaultTabController.of(context)!.index;
+  //         return Column(
+  //           crossAxisAlignment: CrossAxisAlignment.stretch,
+  //           children: <Widget>[
+  //             Container(
+  //               color: defaultTabUnSelectedColor,
+  //               child: TabBar(
+  //                 indicatorSize: TabBarIndicatorSize.tab,
+  //                 indicator:
+  //                     const BoxDecoration(color: defaultTabSelectedColor),
+  //                 labelColor: Colors.white,
+  //                 unselectedLabelColor: Colors.black,
+  //                 tabs: tabWidgets,
+  //               ),
+  //             ),
+  //             Expanded(
+  //               child: Container(
+  //                 color: defaultTabViewBackgroundColor,
+  //                 child: GestureDetector(
+  //                   onHorizontalDragEnd: (details) {
+  //                     if (details.primaryVelocity! > 0) {
+  //                       // 오른쪽으로 스와이프했을 때
+  //                       var prevTabIndex = currentIndex - 1;
+  //                       if (prevTabIndex < 0) {
+  //                         prevTabIndex = tabLength - 1;
+  //                       }
+  //                       DefaultTabController.of(context)!
+  //                           .animateTo(prevTabIndex);
+  //                     } else if (details.primaryVelocity! < 0) {
+  //                       // 왼쪽으로 스와이프했을 때
+  //                       var nextTabIndex = currentIndex + 1;
+  //                       if (nextTabIndex >= tabLength) {
+  //                         nextTabIndex = 0;
+  //                       }
+  //                       DefaultTabController.of(context)!
+  //                           .animateTo(nextTabIndex);
+  //                     }
+  //                   },
+  //                   child: TabBarView(children: tabViewWidget),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         );
+  //       },
+  //     ),
+  //   ),
+  // );
+
 });
 
 //button 태그
@@ -304,55 +418,54 @@ var btnMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
 //   }
 // });
 
-//table 태그
+
 var tableMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
   var element = context.tree.element;
   var tableStyle = context.tree.style;
 
-//모든 row 요소 가져오기
+  // 모든 row(가로) 요소 가져오기
   var rows = element?.querySelectorAll('tr');
-
   List<TableRow> tableRowWidgets = [];
 
-// row 생성
+  var minWidth;
+  var maxWidth;
+
+  // row 생성
   if (rows != null) {
     tableRowWidgets = rows.map((row) {
-      //각 tr의 td요소 가져옴
+      // 각 tr의 td요소 가져옴 -> 각 행의 열 요소 가져오기
       var tds = row.querySelectorAll('td');
       List<TableCell> tableCellWidgets = [];
 
-      // 각 row의 td 생성
+
+      // 각 row의 td 생성하는데 지정된 사이즈를 가져오기
       tableCellWidgets = tds.map((td) {
-        double? eachHeight;
-        double? eachWidth;
         var tdStyle = td.attributes["style"] ?? "";
 
-        //최소 높이 최대 높이 가져오기
-        if (tdStyle != null) {
+        if (tdStyle !=null) {
           var styles = tdStyle.split(';');
           for (var item in styles) {
             var trimmedItem = item.trim();
             if (trimmedItem.startsWith('min-width') ||
-                trimmedItem.startsWith('min-height')) {
+                trimmedItem.startsWith('max-width')) {
               var splitValue = trimmedItem.split(':');
               var property = splitValue[0].trim();
-              var value =
-                  double.tryParse(splitValue[1].trim().replaceAll('px', ""));
-
-              if (property == 'min-width') {
-                eachWidth = value;
-              } else if (property == 'min-height') {
-                eachHeight = value;
-              }
+              var value = double.tryParse(splitValue[1].trim().replaceAll('px', ""));
+            if (property == 'min-width') {
+              minWidth = value;
+            } else if (property == 'max-width') {
+              maxWidth = value;
+            }
             }
           }
         }
 
         return TableCell(
-          child: Container(
-              width: eachWidth,
-              height: eachHeight,
-              child: Text(td.text, textAlign: textAlign(tdStyle))),
+            child: Container(
+              constraints: boxConstraints(tdStyle),
+              child: Text(td.text, textAlign: textAlign(tdStyle)),
+          ),
+
         );
       }).toList();
 
@@ -364,15 +477,27 @@ var tableMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
 
   var tdCount = rows?.first.querySelectorAll('td')?.length;
 
-  return Table(
-    border: TableBorder.all(
-      color: defaultBorder1,
-    ),
-    columnWidths: {
-      for (int i = 0; i < tdCount!; i++) i: IntrinsicColumnWidth(),
-    },
-    children: tableRowWidgets,
+
+  return SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child : Container(
+      constraints: BoxConstraints(
+      minWidth: minWidth * tdCount ,
+        maxWidth: maxWidth * tdCount
+      ),
+        child : Table(
+          border: TableBorder.all(
+            color: defaultBorder1,
+          ),
+          columnWidths: {
+            for (int i = 0; i < tdCount!; i++) i: FlexColumnWidth(),
+          },
+          children: tableRowWidgets,
+        )
+    )
   );
+
+
 });
 
 //첫번째 데이터(두번째행)의 style을 가져와 모든 셀에 동일한 크기를 적용함
@@ -428,7 +553,7 @@ var gridMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
         decoration: BoxDecoration(
             //헤더 셀 테두리
             border: Border.all(
-              color: Colors.grey,
+              color: defaultBorder3,
               width: 1,
             ),
             //헤더 셀 배경색
@@ -494,8 +619,7 @@ var gridMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
       width: gridWidth,
       //(행 높이 * 데이터 개수) + 타이틀 높이(지정값이 없으면 기본값을 할당)
       // todo. gridHeight자리는 css style값을 먼저 읽고 지정값이 없을 때 디폴트 행 높이를 가져오도록 수정해야 함
-      height:
-          (gridHeight * gridData.length) + double.parse(rowHeight[0] ?? "1"),
+      height: (gridHeight * gridData.length) + double.parse(rowHeight[0] ?? "1"),
       child: HorizontalDataTable(
         //스크롤 끝에 도달했을 때 고무줄처럼 늘어나는 효과를 없앰
         scrollPhysics: const ClampingScrollPhysics(),
@@ -634,12 +758,13 @@ var gridCheckBoxMatcherWidget =
               scale: 0.8,
               child: Checkbox(
                 //체크되었을 때
-                activeColor: Colors.grey,
-                //체크되지 않았을 때
+                activeColor: defaultCheckBoxBorder,
+                //체크 아이콘 색상
                 checkColor: Colors.white,
                 value: isCheck.value,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
+
                 ),
                 onChanged: (bool? value) {
                   isCheck.value = value!;
@@ -676,6 +801,7 @@ var comboBoxMatcherWidget =
 
   return Obx(() => Container(
       padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+      margin: const EdgeInsets.only(right:2),
 //css style값을 따르거나 20의 높이를 가짐
       height: context.style.height?.value ?? 20,
 //배경색 및 border 지정
@@ -790,9 +916,6 @@ var inputMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
     }
   }
 
-  print('marginValue $marginValue');
-  print(paddingValue);
-
   return Container(
       height: heightValue,
       // margin: EdgeInsets.fromLTRB(
@@ -853,3 +976,47 @@ var iframeMatcherWidget = CustomRender.widget(widget: (context, buildChildren) {
     return Container();
   }
 });
+
+
+var svgMatcherWidget = CustomRender.widget(widget: (context, buildChildren)  {
+  var divElement = context.tree.element;
+  var rawSvg = divElement?.querySelector('select')?.innerHtml ?? '';
+  final PictureInfo pictureInfo = svg.fromSvgString(rawSvg, '');
+
+  // You can draw the picture to a canvas:
+  final PictureRecorder recorder = PictureRecorder();
+  final Canvas canvas = Canvas(recorder);
+  canvas.drawPicture(pictureInfo.picture);
+
+  // Or convert the picture to an image:
+  final ui.Image image = pictureInfo.picture.toImage(pictureInfo.width.toInt(), pictureInfo.height.toInt());
+
+  pictureInfo.picture.dispose();
+
+  return Container(
+    // 여기에 그려진 이미지를 사용하거나, 그림을 그린 캔버스를 사용할 수 있습니다.
+    child: CustomPaint(
+      painter: CustomPainter(
+        painter: _SvgPainter(pictureInfo.picture),
+      ),
+    ),
+  );
+});
+
+//...
+
+class _SvgPainter extends CustomPainter {
+  final Picture picture;
+
+  _SvgPainter(this.picture);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawPicture(picture);
+  }
+
+  @override
+  bool shouldRepaint(_SvgPainter oldDelegate) {
+    return oldDelegate.picture != picture;
+  }
+}

@@ -4,6 +4,7 @@ import '../page/EmptyPage.dart';
 import '../page/TestPage.dart';
 import '../page/TestPage2.dart';
 import '../page/TestPage3.dart';
+import '../page/TestPage4.dart';
 
 BasePage getPage(Map<String, dynamic> args) {
 
@@ -25,8 +26,8 @@ BasePage getPage(Map<String, dynamic> args) {
     case "control2":
       return TestPage3(tag: screenId, htmlString: htmlString, jsRuntime: jsRuntime);
 
-    case "dummy":
-      return TestPage3(tag: screenId, htmlString: htmlString, jsRuntime: jsRuntime);
+    case "cssTest":
+      return TestPage4(tag: screenId, htmlString: htmlString, jsRuntime: jsRuntime);
       
     default:
       return EmptyPage(tag: screenId, htmlString: htmlString, jsRuntime: jsRuntime);

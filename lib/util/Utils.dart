@@ -38,17 +38,7 @@ class Utils{
 
     return Html.fromDom(
       document: document,
-      customRenders: {
-        btnMatcher(): btnMatcherWidget,
-        tabMatcher(): tabMatcherWidget,
-        tableMatcher(): tableMatcherWidget,
-        gridMatcher(): gridMatcherWidget,
-        gridCheckBoxMatcher(): gridCheckBoxMatcherWidget,
-        comboBoxMatcher(): comboBoxMatcherWidget,
-        inputMatcher() : inputMatcherWidget,
-        iframeMatcher() : iframeMatcherWidget,
-        formMatcher() : formMatcherWidget
-      },
+      customRenders: customRenderMap,
       tagsList: Html.tags..addAll(customTagList),
     );
 
@@ -57,23 +47,13 @@ class Utils{
 
   Widget? getWidgetFromElement(dom.Element? element){
 
-    if(element?.children.length == 0){
+    if(element?.children.isEmpty ?? true){
       return null;
     }
 
     return Html.fromElement(
         documentElement: element,
-        customRenders: {
-          btnMatcher(): btnMatcherWidget,
-          tabMatcher(): tabMatcherWidget,
-          tableMatcher(): tableMatcherWidget,
-          gridMatcher(): gridMatcherWidget,
-          gridCheckBoxMatcher(): gridCheckBoxMatcherWidget,
-          comboBoxMatcher(): comboBoxMatcherWidget,
-          inputMatcher() : inputMatcherWidget,
-          iframeMatcher() : iframeMatcherWidget,
-          formMatcher() : formMatcherWidget
-        },
+        customRenders: customRenderMap,
         tagsList: Html.tags..addAll(customTagList),
     );
   }

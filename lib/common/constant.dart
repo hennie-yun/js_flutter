@@ -5,6 +5,8 @@ import 'dart:ui';
 const defaultButtonColor = Color(0xFFdbdbdb);
 const defaultGridHeaderCell = Color(0xFFd7d7d7);
 
+const defaultCheckBoxBorder = Color(0xFF767676); 
+
 const defaultBorder1 = Color(0xFF9f9f9f);
 const defaultBorder2 = Color(0xFFaeaeae);
 const defaultBorder3 = Color(0xFFe2e2e2);

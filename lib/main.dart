@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_platform/page/FirstPage.dart';
 import 'package:get/get.dart';
-import 'package:js_flutter/page/FirstPage.dart';
 
 void main() async{
 
@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: true,
         home: Scaffold(
+            backgroundColor: Colors.white,
             body: FirstPage()
         )
     );
