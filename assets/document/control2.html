@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpharo Plus</title>
+</head>
+<style>
+    * {
+    box-sizing: content-box;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+ul {
+    margin: 0;
+    padding: 0;
+}
+li {
+    margin: 0;
+    padding: 0;
+}
+.wrapper {
+    display: grid;
+    /* grid-template-columns: 80% 20%; */
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.wrapper > div {
+    position: relative;
+    overflow: auto;
+}
+
+#container {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    position: absolute;
+    background-color: #eee;
+    overflow: auto;
+}
+#formContainer {
+    position:absolute;
+    overflow: auto;
+    padding: 0 20px 20px 0;
+}
+#sizeDiv {
+    display: none;
+    position: fixed;
+    background-color: #000;
+    color: #fff;
+    font-size: 9pt;
+    border: 1px solid #eee;
+    padding: 2px;
+    z-index: 999;
+}
+
+/* Style the handle for resizing */
+/* .resize-handle {
+    width: 6px;
+    height: 6px;
+    background-color: #000;
+    position: absolute;
+    cursor: nwse-resize;
+} */
+.select-outline > .resize-handle {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    height: 10px;
+    width: 10px;
+    background-color: transparent;
+    cursor: nwse-resize;
+    pointer-events: all;
+}
+.select-outline > .resize-handle::before {
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    bottom: -1px;
+    right: -1px;
+    background-color: #fff;
+    border: 1px solid #2496ff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    content: '';
+}
+.nwse-cursor {
+    cursor: nwse-resize; /* Cursor style for resizing */
+}
+.ns-cursor {
+    cursor: ns-resize;
+}
+.ew-cursor {
+    cursor: ew-resize;
+}
+
+/* Style for the custom context menu */
+.context-menu {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    font-size: 9pt;
+    z-index: 999;
+}
+.menu-icon {
+    width: 30px;
+    height: 100%;
+}
+.context-menu-item {
+    padding: 4px 4px;
+    cursor: pointer;
+    display: flex;
+}
+.context-menu-item .menu-text {
+    width: 170px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 4px;
+}
+.context-menu-item .menu-left-text {
+    text-align : left;
+}
+.context-menu-item .menu-right-text {
+    text-align : right;
+}
+.context-menu-divider {
+    position: absolute;
+    width: calc(100% - 30px);
+    right: 0px;
+    border: 1px solid #eee;
+}
+.context-menu-item:not(.disabled):hover {
+    background-color: #f0f0f0;
+}
+.context-menu-item.disabled {
+    color: #929292;
+    cursor: not-allowed;
+}
+
+/* 공통 부분 */
+.idText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.mainElement {
+    position: relative;
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+    /* border-width: 1px;
+    border-style: solid;
+    border-color: #000; */
+}
+.mainElement > .icon {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 30px 30px;
+}
+.subElement {
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+input.subElement {
+    cursor: default;
+    -webkit-user-drag: none;
+    padding: 0px;
+}
+.gridElement {
+    position: relative;
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+    /* border-width: 1px;
+    border-style: solid;
+    border-color: #000; */
+}
+.gridElement > .icon {
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px 20px;
+}
+.select-outline {
+    position: absolute;
+    color: #3498db;
+    pointer-events: none;
+    opacity: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 11;
+    outline: 2px solid #3498db;
+}
+.select-outline > .outlineText {
+    top: -10px;
+    background-color: #3498db;
+    color: #fff;
+}
+.ctrl-outline {
+    position: absolute;
+    color: #3498db;
+    pointer-events: none;
+    opacity: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 10;
+    outline: 1px solid #3498db;
+}
+.outlineText {
+    position: absolute;
+    left: 0;
+    top: -10px;
+    margin-top: -1px;
+    margin-left: -1px;
+    font-size: 8pt;
+}
+.ctrl-outline > .outlineText {
+    color: #3498db;
+}
+.parent-outline {
+    position: absolute;
+    color: #ff461f;
+    pointer-events: none;
+    opacity: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 10;
+    outline: 1px dashed #ff461f;
+}
+.parent-outline > .outlineText {
+    color: #ff461f;
+}
+table {
+    border-collapse: collapse;
+}
+table th, table td {
+    border-width: 1px;
+    border-style: solid;
+}
+[draggable] {
+    cursor: move;
+}
+.blackTheme {
+    --main-bg-color: #111;
+    --main-border-color: #fff;
+    --btn-border-color: #ACACAC;
+    --btn-bg-color: #DBDBDB;
+    --btn-text-color: #202020;
+    --input-border-color: #A9A9A9;
+    --input-bg-color: #fff;
+    --input-text-color: #000;
+    --input-placeholder-color: #5f5f5f;
+    --grid-hd-border-color: #c2c2c2;
+    --grid-hd-bg-color: #d7d7d7;
+    --grid-body-border-color: #E6E6E6;
+    --grid-body-bg-color: #FDFDFD;
+    --table-bg-color: #FFFFFF;
+    --table-border-color: #C2C2C2;
+    --tab-bg-color: #f5f5f5;
+    --tab-text-color: #333333;
+    --tab-border-color: #aeaeae;
+    --tab-active-border-color: #5f5f5f;
+    --tab-active-bg-color: #9b9b9b;
+    --tab-active-text-color: #ffffff;
+    --tab-content-bg-color: #e5e5e5;
+    --tab-content-border-color: #acacac;
+}
+.lightTheme {
+    --main-bg-color: #fff;
+    --main-border-color: #111;
+    --btn-border-color: #ACACAC;
+    --btn-bg-color: #DBDBDB;
+    --btn-text-color: #202020;
+    --input-border-color: #A9A9A9;
+    --input-bg-color: #fff;
+    --input-text-color: #000;
+    --input-placeholder-color: #5f5f5f;
+    --grid-hd-border-color: #c2c2c2;
+    --grid-hd-bg-color: #d7d7d7;
+    --grid-body-border-color: #E6E6E6;
+    --grid-body-bg-color: #FDFDFD;
+    --table-bg-color: #FFFFFF;
+    --table-border-color: #C2C2C2;
+    --tab-bg-color: #f5f5f5;
+    --tab-text-color: #333333;
+    --tab-border-color: #aeaeae;
+    --tab-active-bg-color: #9b9b9b;
+    --tab-active-border-color: #5f5f5f;
+    --tab-active-text-color: #ffffff;
+    --tab-content-bg-color: #e5e5e5;
+    --tab-content-border-color: #acacac;
+}
+/* style for controls */
+#form {
+    position: absolute;
+    display: block;
+    top: 10px;
+    left: 10px;
+    min-width: 100px;
+    min-height: 100px;
+    margin: 0;
+    padding: 0px;
+    outline-style: solid;
+    outline-color: var(--main-border-color);
+    outline-width: 2px; 
+    margin-bottom: 30px;
+    margin-right: 30px;
+    /* overflow-y: auto;
+    overflow-x: hidden; */
+}
+[ctrltype] {
+    font-size: 14px;
+}
+.CT_FORMLINK {
+    overflow: auto;
+    border-width: 0;
+    background-color: #fff;
+}
+.layoutSection .CT_FORMLINK {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.CT_BUTTON {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--btn-border-color);
+    background-color: var(--btn-bg-color);
+    color: var(--btn-text-color);
+    margin: 0;
+    padding: 0;
+}
+
+.CT_BUTTON:disabled{
+    border-color: #ACACAC;
+    background-color: #DBDBDB;
+    color: #929292;
+    cursor: not-allowed;
+}
+
+.CT_BUTTON.btn_buy{
+    border-color: #DC3B3A;
+    color: #FFFFFF;
+    background: linear-gradient(#F35F5E,#ED4342);
+}
+
+.CT_BUTTON.btn_buy:disabled{
+    border-color: #8B8B8B;
+    color: #FFFFFF;
+    background: linear-gradient(#A8A8A8,#979797);
+}
+
+.CT_BUTTON.btn_sell{
+    border-color: #3A5CDC;
+    color: #FFFFFF;
+    background: linear-gradient(#5E8BF3,#426AED);
+}
+
+.CT_BUTTON.btn_sell:disabled{
+    border-color: #8B8B8B;
+    color: #FFFFFF;
+    background: linear-gradient(#A8A8A8,#979797);
+}
+
+.CT_BUTTON.btn_cancel{
+    border-color: #8552AB;
+    color: #FFFFFF;
+    background: linear-gradient(#B273E0,#9660BE);
+}
+
+.CT_BUTTON.btn_cancel:disabled{
+    border-color: #8B8B8B;
+    color: #FFFFFF;
+    background: linear-gradient(#A8A8A8,#979797);
+}
+
+.CT_BUTTON.btn_modify{
+    border-color: #35A48A;
+    color: #FFFFFF;
+    background: linear-gradient(#4FC6AA,#2CA68A);
+}
+
+.CT_BUTTON.btn_modify:disabled{
+    border-color: #8B8B8B;
+    color: #FFFFFF;
+    background: linear-gradient(#A8A8A8,#979797);
+}
+
+.btn_toggle.toggleOff{
+    height: 41px;
+    width: auto;
+    border-radius: 10px;
+    border-style: none;
+    padding : 10px;
+}
+.btn_toggle.toggleOn{
+    height: 41px;
+    width: auto;
+    border-radius: 10px;
+    border-style: none;
+    padding : 10px;
+    background-color: var(--Primary);
+}
+
+.CT_GROUPBOX {
+    overflow: auto;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--main-border-color);
+}
+.CT_MASKEDIT{
+    text-align:left;
+
+    display: flex;
+    align-items: center;
+    text-indent: 4px;
+
+    border-width: 1px;
+    border-style: solid;
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--main-border-color);
+    color: var(--input-text-color);
+}
+.CT_MASKEDIT.placeholder{
+    text-align:left;
+
+    display: flex;
+    align-items: center;
+    text-indent: 4px;
+
+    border-width: 1px;
+    border-style: solid;
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--main-border-color);
+    color: var(--input-placeholder-color);
+}
+.CT_MASKEDIT[disabled]{
+    border: 1px solid #ACACAC;
+    color: #929292;
+    background-color: #D7D8DA;
+}
+
+.CT_SPIN {
+    display: flex;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--input-border-color);
+    background-color: var(--input-bg-color);
+}
+.CT_SPIN > .icon-minus {
+    background-image: url(images/spin_minus.png);
+}
+.CT_SPIN > .icon-plus {
+    background-image: url(images/spin_plus.png);
+}
+
+.CT_CALENDAR {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--input-text-color);
+    border-color: var(--input-border-color);
+    border-width: 1px;
+    border-style: solid;
+    background-color: var(--input-bg-color);
+}
+.CT_CALENDAR > .icon-cal {
+    background-image: url(images/cal_icon.png);
+}
+
+.CT_CALENDAR[disabled]{
+    background-color: #D7D8DA;
+}
+.CT_CHART {
+    border-color: var(--input-border-color);
+    border-width: 1px;
+    border-style: solid;
+}
+.CT_CHART > .icon-chart {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-color: #fff;
+    background-image: url(images/chart_icon.png);
+}
+
+.CT_TVCHART {
+    border-color: var(--input-border-color);
+    border-width: 1px;
+    border-style: solid;
+}
+.CT_TVCHART > .icon-tv {
+    width: 100%;
+    height: 100%;
+    background-image: url(images/tv_icon.png);
+    background-size: cover;
+}
+
+.CT_IMAGE {
+    overflow: hidden;
+    box-sizing: border-box;
+    border-color: var(--input-border-color);
+    border-width: 1px;
+    border-style: solid;
+}
+.CT_IMAGE > .icon-image {
+    background-image: url(images/image_icon.png);
+}
+.CT_IMAGE > img {
+    width: 100%;
+    height: 100%;
+
+}
+
+.CT_JMCOMBO {
+    border-color: var(--input-border-color);
+    border-width: 1px;
+    border-style: solid;
+    padding-left: 5px;
+}
+
+.CT_JMCOMBO > div:first-of-type {
+    font-size: 12px;
+}
+
+.CT_JMCOMBO > .icon-jmcombo {
+    background-image: url(images/jmcombo_icon.png);
+    background-size: 20px 20px;
+    border-left: 1px solid;
+}
+.CT_JMCOMBO > .icon-jmcombo2 {
+    background-image: url(images/combo_icon.png);
+    background-size: 20px 20px;
+    border-left: 1px solid;
+}
+
+.CT_COMBO {
+    overflow: hidden;
+    border-color: var(--input-border-color);
+    border-width: 1px;
+    border-style: solid;
+    background-color: var(--input-bg-color);
+    display: flex;
+    text-indent: 8px;
+}
+.CT_COMBO > div {
+    display: flex;
+    align-items: center;
+}
+.CT_COMBO > .icon-combo {
+    background-image: url(images/combo_icon.png);
+}
+
+.CT_ACCOMBO {
+    overflow: hidden;
+    border-color: var(--input-border-color);
+    border-width: 1px;
+    border-style: solid;
+}
+.CT_ACCOMBO > .icon-combo {
+    background-image: url(images/combo_icon.png);
+}
+.CT_ACCOMBO .acctno {
+    font-weight: 700;
+    padding-left: 10px;
+}
+.CT_ACCOMBO .accttype {
+    font-weight: 300;
+    font-size: 10pt;
+    color: #aaa;
+    padding-left: 10px;
+}
+
+.CT_GRID {
+    background-color: var(--grid-body-bg-color);
+    overflow: auto;
+}
+.CT_GRID tr {
+    height: 30px;
+}
+.CT_GRID th {
+    overflow: hidden;
+    background-color: var(--grid-hd-bg-color);
+    border-color: var(--grid-hd-border-color);
+
+    font-weight: 500;
+
+    width: 90px;
+    min-width: 90px;
+    max-width: 90px;
+}
+.CT_GRID td {
+    overflow: hidden;
+    background-color: var(--grid-body-bg-color);
+    border-color: var(--grid-body-border-color);
+
+    width: 90px;
+    min-width: 90px;
+    max-width: 90px;
+}
+
+.CT_TABLE {
+    overflow: hidden;
+}
+.CT_TABLE table {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+.CT_TABLE td {
+    position: relative;
+    background-color: var(--table-bg-color);
+    border-color: var(--table-border-color);
+
+    height: 25px;
+    text-align: center;
+    width: 90px;
+    min-width: 90px;
+    max-width: 90px;
+    overflow: hidden;
+}
+.CT_TABLE td > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 9pt;
+}
+.CT_TABLE.onSelected td:hover {
+    box-shadow: 0 0 0 1px #ff461f inset;
+}
+.CT_TAB {
+    /*border: 1px solid var(--tab-content-border-color);*/
+}
+.CT_TAB ul {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-evenly; */
+    list-style: none;
+    height: 30px;
+    line-height: 30px;
+}
+.CT_TAB ul li {
+    border-right: 1px solid var(--tab-border-color);
+    background-color: var(--tab-bg-color);
+    color: var(--tab-text-color);
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid var(--tab-border-color);
+}
+
+.CT_TAB ul li.selected {
+    background-color: var(--tab-active-bg-color);
+    color: var(--tab-active-text-color);
+    border-bottom: 1px solid var(--tab-active-border-color);
+}
+.CT_TAB ul li:last-child {
+    border-right: none;
+}
+.CT_TAB .tab-content {
+    display: none;
+    /*width: 100%;*/
+    height: calc(100% - 30px);
+    overflow: auto;
+    background-color: var(--tab-content-bg-color);
+    border: 1px solid var(--tab-content-border-color);
+    border-top-width: 0px;
+}
+.CT_TAB .tab-content.tab-active {
+    display: block;
+}
+
+.CT_LABEL {
+    display: flex;
+    align-items: center;
+    text-indent: 4px;
+
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    color: var(--input-text-color);
+}
+
+.CT_STATIC {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: var(--input-bg-color);
+    color: var(--input-text-color);
+}
+
+.CT_EDITBOX {
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    color: var(--input-text-color);
+    display: block;
+    padding:6px;
+    resize:none;
+    font:inherit;
+    overflow-y:hidden;
+    word-wrap:break-word;
+    ime-mode:active;
+    -ms-ime-mode:active;
+    -moz-ime-mode:active;
+    -khtml-ime-mode: active;
+    -webkit-ime-mode: active;
+    -o-user-ime-mode: active;
+}
+
+.CT_EDITBOX:disabled{
+    border: 1px solid #ACACAC;
+    color: #929292;
+    background-color: #DBDBDB;
+}
+
+.CT_PASSWORD {
+    text-indent: 4px;
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    color: var(--input-text-color);
+}
+
+.CT_PASSWORD[disabled]{
+    background-color: #DBDBDB;
+}
+
+.CT_HOGA td {
+    position: relative;
+    background-color: var(--table-bg-color);
+    border-color: var(--table-border-color);
+    height: 40px;
+    text-align: center;
+}
+.CT_HOGA td > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 9pt;
+}
+.CT_HOGA.onSelected td:hover {
+    box-shadow: 0 0 0 1px #ff461f inset;
+}
+
+.CT_DIV {
+    background-color: var(--main-bg-color);
+}
+
+.CT_RADIO {
+    display: flex;
+    overflow: auto;
+}
+
+.CT_CHECK ,.CT_CHECK_LEFT ,.CT_CHECK_RIGHT{
+    /* position:absolute; */
+    border:1px solid #ACACAC;
+    overflow:hidden;
+    background-color:inherit;
+    color:#202020;
+    text-align:left;
+
+}
+
+.CT_CHECK table{
+    table-layout:fixed;
+    white-space:nowrap;
+    background-color:inherit;
+    width:100%;
+    height:100%;
+}
+.CT_CHECK input {
+    padding:5px;
+    vertical-align: middle;
+    width:20px;
+    pointer-events: none;
+}
+.CT_CHECK input:disabled{
+    cursor:not-allowed;
+}
+
+.CT_CHECK_LEFT label{
+    margin-left: -20px;
+    clear: none;
+    padding: 5px 0 4px 24px;
+    cursor: pointer;
+}
+
+.CT_CHECK_LEFT input{
+    float: left;
+    width: 20px;
+}
+.CT_CHECK_RIGHT label{
+    clear: none;
+    padding: 5px 5px 4px 0px;
+    cursor: pointer;
+}
+
+.CT_CHECK .chk_toggle {
+    border-radius: 50px;
+    border-width: 1px 1px 1px 1px;
+    width: 32px;
+    height: 12px;
+    padding: 5px;
+    background-color: var(--btn-bg-color);
+}
+
+.CT_CHECK .chk_toggle_btn{
+    border-radius: 50px;
+    border-width: 1px 1px 1px 1px;
+    width: 35%;
+    height: 100%;
+    background-color: var(--main-bg-color);
+}
+
+.CT_CHECK .chk_toggle.click{
+    background-color: #6690CC;
+
+}
+.CT_CHECK .chk_toggle_btn.click{
+    float: right;
+}
+.CT_GRID_CHECK > .icon-chk {
+    width: 11px;
+    height: 11px;
+    display: flex;
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+    margin: 3px 3px 3px 4px;
+    border-color: #767676;
+}
+</style>
+<body class="lightTheme">
+<div id="form" ctrltype="CT_FORM" width="100%" class="formGrid" container="true" style="width: 500px; height: 700px; cursor: copy;">
+    <!-- </section> -->
+    <div container="true" id="tab_3" class="mainElement CT_TAB" ctrl-resize="resize" ctrltype="CT_TAB" style="height: 200px; position: relative; cursor: default; left: 1px; top: 0px;">
+        <ul class="tabs">
+            <li class="tabHeader selected" tabid="1" no="2" style="width: 100%;">Tab 2</li>
+            <li class="tabHeader" tabid="0" no="0" style="width: 100%;">Tab 1</li>
+            <li class="tabHeader" tabid="2" no="1" style="width: 100%;">Tab 3</li>
+            <li class="tabHeader" tabid="3" no="4" style="width: 100%;">Tab 4</li>
+        </ul>
+        <div class="tab-content tab-active" container="true" tabid="1" no="2">
+            <button id="btn_1" class="mainElement CT_BUTTON" ctrl-resize="resize" ctrltype="CT_BUTTON" style="position: relative; width: 100px; height: 54px; display: block; cursor: default;">This is good</button>
+        </div>
+        <div class="tab-content" container="true" tabid="0" no="0">
+            <div id="stc_1" class="mainElement CT_STATIC" ctrl-resize="resize" ctrltype="CT_STATIC" style="position: relative; width: 100px; height: 48px; display: block;">Static</div>
+        </div>
+        <div class="tab-content" container="true" tabid="2" no="1">
+            <div id="lbl_1" class="mainElement CT_LABEL" ctrl-resize="resize" ctrltype="CT_LABEL" style="position: relative; width: 100px; height: 48px;">Label</div>
+        </div>
+        <div class="tab-content" container="true" tabid="3" no="4">
+            <div class="placeholder mainElement CT_MASKEDIT" id="me_1" ctrl-resize="resize" ctrltype="CT_MASKEDIT" style="position: relative; width: 100px; height: 48px;">Maskedit</div>
+            <button id="btn_3" class="mainElement CT_BUTTON" ctrl-resize="resize" ctrltype="CT_BUTTON" style="position: relative; width: 100px; height: 50px; display: block;">Hi5</button>
+        </div>
+    </div>
+
+    <div id="grd_1" class="mainElement CT_GRID" ctrl-resize="resize" ctrltype="CT_GRID" style="border-width: 0px; cursor: default;">
+        <table>
+            <tr style="height: 25px;">
+                <th rowspan="1" colspan="2" style="text-align: center;">1111</th>
+                <th style="text-align: center;">3333</th>
+                <th rowspan="1" colspan="2" style="text-align: center;">4444</th>
+            </tr>
+            <tr style="height: 25px;">
+                <td style="width: 90px; min-width: 90px; max-width: 90px; overflow: hidden; text-align: center;">@shcode</td>
+                <td style="width: 90px; min-width: 90px; max-width: 90px; overflow: hidden; text-align: center;">@jmname</td>
+                <td style="width: 90px; min-width: 90px; max-width: 90px; overflow: hidden; text-align: right;">@change</td>
+                <td style="width: 90px; min-width: 90px; max-width: 90px; overflow: hidden;">
+                    <div class="gridElement CT_GRID_CHECK" style="display: flex; justify-content: center;">
+                        <div class="gridElement icon-chk"></div>
+                    </div>
+                </td>
+                <td style="width: 90px; min-width: 90px; max-width: 90px; overflow: hidden;">
+                    <div class="gridElement CT_COMBO" style="display: flex; justify-content: flex-end;">
+                        <div class="icon icon-combo"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <button id="btn_btn" class="mainElement CT_BUTTON" ctrl-resize="resize" ctrltype="CT_BUTTON" style="position: relative; width: 100px; height: 54px; left: 101px; top: 132px; display: block; cursor: default;">Button</button>
+
+    <div id="tbl_asdf" class="mainElement CT_TABLE" ctrl-resize="resize" ctrltype="CT_TABLE" style="border-width: 0px; cursor: default;">
+        <table style="max-width: 450px; max-height: 50px;">
+            <tr>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;">sdfs</td>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;"></td>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;"></td>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;"></td>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;"></td>
+            </tr>
+            <tr>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;">sdfs</td>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;"></td>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;"></td>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;"></td>
+                <td container="true" style="min-width: 90px; max-width: 90px; max-height: 25px; min-height: 25px; text-align: right;"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+
+</body>
+<!--
+
+<div class="gridElement CT_COMBO" style="display: flex; justify-content: flex-end; width:100px">
+    <div class="icon icon-combo"></div>
+    <select>
+        <option selected="selected">1</option>
+        <option>2</option>
+        <option>3</option>
+    </select>
+</div>
+
+input 예시 파일 -->
+<!--
+<div id="ake000002_form_1_grp_main" class="hi5_groupbox flexGb" width="100%"
+     style="position:relative;left:0px;top:0px;padding:75px  16px  12px  16px;border-width:0px;">
+
+    <div id="ake000002_form_1_stc_name" class="hi5_static BRAND" width="100%"
+         style="position:relative;left:0px;top:0px;margin:0px  0px  10px  0px;font-size:18px;font-weight:bold;">
+        <div>
+            <div id="ake000002_form_1_stc_name_data" style="white-space: normal;">
+            <span
+                    id="ake000002_form_1_stc_name_span">Username</span>
+            </div>
+        </div>
+    </div>
+    <input placeholder="Enter your username"  width="100%" id="ake000002_form_1_edt_name" class="hi5_maskedit"
+           style="position:relative;height:46px;left:0px;top:0px;margin:0px  0px  30px  0px;">
+
+
+    <div id="ake000002_form_1_stc_id" class="hi5_static BRAND" width="100%"
+         style="position:relative;left:0px;top:0px;margin:0px  0px  10px  0px;font-size:18px;font-weight:bold;">
+        <div>
+            <div id="ake000002_form_1_stc_id_data" style="white-space: normal;">
+            <span
+                    id="ake000002_form_1_stc_id_span">ID/Passport No.</span>
+            </div>
+        </div>
+    </div>
+
+    <input placeholder="Enter ID/ Passport no." width="100%" id="ake000002_form_1_edt_id"
+           class="hi5_maskedit"
+           style="position:relative;
+           height:46px;
+           left:0px;top:0px;
+           margin:0px  0px  30px  0px;">
+
+</div>
+
+<div id="kpm034000_form_1_grp_description" width="100" class="hi5_groupbox"
+     style="position:relative;left:0px;top:0px;margin:0px  0px  30px  0px;padding:0px  0px  0px  0px;border-style:none;">
+    <div id="kpm034000_form_1_stc_10" width="100" class="hi5_static"
+         style="position:relative;left:0px;top:0px;margin:0px  0px  15px  0px;font-size:14px;font-weight:bold;">
+        <div>
+            <div id="kpm034000_form_1_stc_10_data" style="white-space: normal;">
+                <span
+                        id="kpm034000_form_1_stc_10_span">Description</span></div>
+        </div>
+    </div>
+    <textarea placeholder="Enter description (maximum 100 characters)"
+              id="kpm034000_form_1_edt_desc" maxlength="100" width="100" class="hi5_edit"
+              style="position:relative;
+              height:231px;
+              left:0px;
+              top:0px;
+              padding:10px 0px 0px 20px;
+              border-radius:10px;
+              font-size:14px;"></textarea>
+</div>
+
+<div width="100" class="hi5_static"
+     style="position:relative;left:0px;top:0px;margin:0px  0px  15px  0px;font-size:14px;font-weight:bold;">
+    <div>
+        <div style="white-space: normal;">
+            <span>Description</span></div>
+    </div>
+</div> -->
+
+</html>
