@@ -52,9 +52,9 @@ class Utils{
     }
 
     return Html.fromElement(
-        documentElement: element,
-        customRenders: customRenderMap,
-        tagsList: Html.tags..addAll(customTagList),
+      documentElement: element,
+      customRenders: customRenderMap,
+      tagsList: Html.tags..addAll(customTagList),
     );
   }
 }

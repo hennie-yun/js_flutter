@@ -1,13 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
+import 'package:flutter_js/javascript_runtime.dart';
 import 'package:html/parser.dart' as htmlparser;
-import 'package:csslib/parser.dart' as css_parser;
-import 'package:csslib/visitor.dart' as css_visitor;
-
 import 'package:html/dom.dart' as dom;
 
-import 'package:flutter/material.dart';
-import 'package:flutter_js/javascript_runtime.dart';
-
+import 'package:csslib/visitor.dart' as css_visitor;
 import '../common/customControl.dart';
 import '../common/jsCommon.dart';
 
@@ -26,9 +24,9 @@ abstract class BasePage<T> extends StatelessWidget {
 
   BasePage(
       {super.key,
-      required String tag,
-      required String htmlString,
-      required JavascriptRuntime jsRuntime}) {
+        required String tag,
+        required String htmlString,
+        required JavascriptRuntime jsRuntime}) {
     this._tag = tag;
     this.htmlString = htmlString;
     this.flutterJs = jsRuntime;
@@ -37,6 +35,8 @@ abstract class BasePage<T> extends StatelessWidget {
     jsRuntimeList.add(this.flutterJs);
     _init();
   }
+
+  get css_parser => null;
 
   /**
    * html String값을 html 위젯으로 변환하는 메서드
@@ -82,19 +82,17 @@ abstract class BasePage<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
-      onPopInvoked: (bool isBack) {
-        //화면마다 JS런타임객체가 생성됨
-        //화면이 닫힐 때 JS런타임 객체도 삭제되도록 함
-        if (isBack) {jsRuntimeList.removeLast();}
-      },
-      child: Scaffold(
+        canPop: true,
+        onPopInvoked: (bool isBack) {
+          //화면마다 JS런타임객체가 생성됨
+          //화면이 닫힐 때 JS런타임 객체도 삭제되도록 함
+          if (isBack) {jsRuntimeList.removeLast();}
+        },
+        child: Scaffold(
           backgroundColor: Colors.white,
-          body: ListView(
-            children: [
-               html
-            ],
-          ),),
-    );
+          body: SingleChildScrollView(
+            child : html,
+          ),
+        ));
   }
 }

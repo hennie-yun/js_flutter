@@ -5,6 +5,7 @@ import '../page/TestPage.dart';
 import '../page/TestPage2.dart';
 import '../page/TestPage3.dart';
 import '../page/TestPage4.dart';
+import '../page/TestPage5.dart';
 
 BasePage getPage(Map<String, dynamic> args) {
 
@@ -28,7 +29,13 @@ BasePage getPage(Map<String, dynamic> args) {
 
     case "cssTest":
       return TestPage4(tag: screenId, htmlString: htmlString, jsRuntime: jsRuntime);
-      
+
+    case "svg_content":
+      return TestPage5(tag: screenId, htmlString: htmlString, jsRuntime: jsRuntime);
+
+    case "iframe":
+      return TestPage5(tag: screenId, htmlString: htmlString, jsRuntime: jsRuntime);
+
     default:
       return EmptyPage(tag: screenId, htmlString: htmlString, jsRuntime: jsRuntime);
   }
